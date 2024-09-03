@@ -4,29 +4,29 @@
   	import { SearchOutline } from 'flowbite-svelte-icons';
 </script>
 
-<header>
+<header class="max-w-full overflow-auto">
 	<Navbar class="bg-yellow-950 p-4">
 		<NavBrand href="/">
-			<span class="self-center whitespace-nowrap text-xl font-bold mr-2 text-orange-100">
+			<span class="self-center whitespace-nowrap md:text-xl font-bold mr-2 text-orange-100">
 				Chhatrapati Shivaji Maharaj Vastu Sangrahalaya
 			</span>
-			<span class="self-center whitespace-nowrap text-xl font-semibold text-orange-100">
+			<span class="self-center whitespace-nowrap md:text-xl font-semibold text-orange-100">
 				(CSMVS)
 			</span>
 		</NavBrand>
 		<NavBrand>
-			<span class="self-center whitespace-nowrap text-xl font-semibold text-red-100">
+			<span class="self-center whitespace-nowrap md:text-xl font-semibold text-red-100">
 				Ticket Booking Chatbot
 			</span>
 		</NavBrand>
 	</Navbar>
 </header>
 
-<main style="min-height: 81.5vh;">
+<main style="min-height: 81.5vh;" class="max-w-full">
 	<slot/>
 </main>
 
-<footer>
+<footer class="max-w-full overflow-auto">
 	<Navbar class="bg-yellow-950 p-4 text-orange-100">
 		<Footer rounded color="form" class="w-full flex items-center text-center justify-center">
 			© Created as a sample chatbot website. All Rights Reserved.

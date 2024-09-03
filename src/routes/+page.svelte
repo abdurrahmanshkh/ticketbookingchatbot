@@ -44,7 +44,7 @@
     bg-cover bg-center bg-no-repeat py-10 md:px-16"
 >
 	<!-- Gallery -->
-	<Card class="max-w-full space-y-4 bg-opacity-60 text-inherit">
+	<Card class="max-w-full space-y-4 bg-stone-100 bg-opacity-60 text-inherit">
 		<h2 class="self-start text-2xl font-bold">Gallery</h2>
 		<Carousel {images} {forward} let:Indicators let:Controls class="min-h-96" duration="2000">
 			<Controls />
@@ -54,7 +54,7 @@
 
 	<section id="about" class="mt-8 grid max-w-full gap-8 md:grid-cols-2">
 		<!-- About -->
-		<Card class="max-w-full bg-orange-100 bg-opacity-60 mix-blend-luminosity">
+		<Card class="max-w-full bg-orange-100 bg-opacity-60  text-inherit">
 			<h2 class="mb-4 text-2xl font-bold">
 				Welcome to the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS)
 			</h2>
@@ -78,7 +78,7 @@
 		</Card>
 
 		<!-- Chatbot -->
-		<Card class="max-w-full bg-red-100 bg-opacity-60 text-inherit">
+		<Card class="max-w-full max-h-[590px] min-h-96 bg-red-100 bg-opacity-60 text-inherit">
 			<h2 class="mb-4 text-2xl font-bold">Chat with Our Ticket Booking Bot</h2>
 			<div class="chatbox mb-4 h-full overflow-y-auto rounded-lg bg-orange-50 bg-opacity-50 p-4">
 				{#each chatMessages as chat}
