@@ -19,7 +19,6 @@ const sessionClient = new dialogflow.SessionsClient({
 			'https://www.googleapis.com/robot/v1/metadata/x509/chatbot%40ace-axon-432609-c3.iam.gserviceaccount.com',
 		universe_domain: 'googleapis.com'
 	}
-	// Update the path to your service account key file
 });
 
 // Your Dialogflow Project ID

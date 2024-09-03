@@ -3,7 +3,6 @@
 	let message = '';
 	let chatMessages = [];
 	import images from './images.json';
-	let index = 0;
 	let forward = true;
 
 	async function sendMessage() {
@@ -40,7 +39,10 @@
 	}
 </script>
 
-<main class="max-w-full bg-[url('bg.jpg')] bg-cover bg-center bg-no-repeat py-10 md:px-16">
+<main
+	class="max-w-full bg-[url('https://lh3.googleusercontent.com/pw/AP1GczP-GJM0ameJZS6Xg--gOPWpbmDCLPuQjjuxYrzhUeB-SVE1kQMgmLoMtwvFDe1E5MD9_CNNvkMzsmdctjSqokvKqbvZsdLLoRVeeCgB4nLLqBGsNlTRcKBIOcNXeZych6xg8rnq6Ex19ggzDTq_NbDU=w1283-h855-s-no-gm?authuser=0')]
+    bg-cover bg-center bg-no-repeat py-10 md:px-16"
+>
 	<!-- Gallery -->
 	<Card class="max-w-full space-y-4 bg-opacity-60 text-inherit">
 		<h2 class="self-start text-2xl font-bold">Gallery</h2>
@@ -78,7 +80,7 @@
 		<!-- Chatbot -->
 		<Card class="max-w-full bg-red-100 bg-opacity-60 text-inherit">
 			<h2 class="mb-4 text-2xl font-bold">Chat with Our Ticket Booking Bot</h2>
-			<div class="chatbox mb-4 h-full overflow-y-auto rounded-lg  bg-orange-50 bg-opacity-50 p-4">
+			<div class="chatbox mb-4 h-full overflow-y-auto rounded-lg bg-orange-50 bg-opacity-50 p-4">
 				{#each chatMessages as chat}
 					<p class={chat.user === 'Bot' ? 'text-blue-800' : 'text-gray-800'}>
 						<strong>{chat.user}:</strong>
