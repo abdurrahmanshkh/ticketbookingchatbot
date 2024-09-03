@@ -5,20 +5,18 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "npm run build && wrangler pages dev",
+		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"test": "npm run test:integration && npm run test:unit",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest",
-		"deploy": "npm run build && wrangler pages deploy"
+		"test:unit": "vitest"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/adapter-cloudflare": "^4.7.2",
 		"@sveltejs/kit": "^2.5.25",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/typography": "^0.5.14",
@@ -40,12 +38,12 @@
 		"tailwindcss": "^3.4.10",
 		"typescript": "^5.0.0",
 		"vite": "^5.0.3",
-		"vitest": "^2.0.0",
-		"wrangler": "^3.72.2"
+		"vitest": "^2.0.0"
 	},
 	"type": "module",
 	"dependencies": {
 		"@google-cloud/dialogflow": "^6.8.0",
+		"@sveltejs/adapter-node": "^5.2.2",
 		"dialogflow": "^4.0.3"
 	}
 }
