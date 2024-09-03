@@ -43,5 +43,9 @@
 		"vitest": "^2.0.0",
 		"wrangler": "^3.72.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@google-cloud/dialogflow": "^6.8.0",
+		"dialogflow": "^1.2.0"
+	}
 }
