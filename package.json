@@ -46,6 +46,6 @@
 	"type": "module",
 	"dependencies": {
 		"@google-cloud/dialogflow": "^6.8.0",
-		"dialogflow": "^1.2.0"
+		"dialogflow": "^4.0.3"
 	}
 }
