@@ -40,7 +40,7 @@
 </script>
 
 <main
-	class="max-w-full bg-[url('https://lh3.googleusercontent.com/pw/AP1GczP-GJM0ameJZS6Xg--gOPWpbmDCLPuQjjuxYrzhUeB-SVE1kQMgmLoMtwvFDe1E5MD9_CNNvkMzsmdctjSqokvKqbvZsdLLoRVeeCgB4nLLqBGsNlTRcKBIOcNXeZych6xg8rnq6Ex19ggzDTq_NbDU=w1283-h855-s-no-gm?authuser=0')]
+	class="max-w-full bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')]
     bg-cover bg-center bg-no-repeat py-10 md:px-16"
 >
 	<!-- Gallery -->
