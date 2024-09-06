@@ -1,38 +1,38 @@
 <script>
 	import '../app.css';
-	import { Navbar, Footer, Card } from 'flowbite-svelte';
+	import { Card } from 'flowbite-svelte';
 </script>
 
-<header class="max-w-full overflow-auto">
-	<Navbar class="bg-yellow-950 p-4">
-		<div>
-			<span class="self-center whitespace-nowrap md:text-xl font-bold text-orange-100">
-				Chhatrapati Shivaji Maharaj Vastu Sangrahalaya
-			</span>
-			<span class="self-center whitespace-nowrap md:text-xl font-semibold text-orange-100">
-				[CSMVS]
-			</span>
-		</div>
-		<div>
-			<span class="self-center whitespace-nowrap md:text-xl font-bold text-red-100">
-				Ticket Booking Chatbot
-			</span>
-		</div>
-	</Navbar>
+<header
+	class="min-w-full max-w-full bg-gradient-to-t from-yellow-950 to-stone-950 md:px-8 px-4 py-3 md:grid md:grid-cols-4"
+>
+	<div
+		class="min-w-fit max-w-full self-center text-2xl font-bold text-yellow-700 md:text-left md:text-4xl"
+	>
+		CSMVS
+	</div>
+	<div
+		class="col-span-2 min-w-fit max-w-full self-center font-semibold text-orange-200 md:text-center md:text-xl"
+	>
+		Chhatrapati Shivaji Maharaj Vastu Sangrahalaya
+	</div>
+	<div
+		class="min-w-fit max-w-full self-center font-semibold text-orange-300 md:text-right md:text-xl"
+	>
+		Ticket Booking Chatbot
+	</div>
 </header>
 
 <main class="bg-yellow-950">
-<Card
-	class="max-w-full bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')]
-    bg-cover bg-center bg-no-repeat py-10 md:px-16 border-yellow-800" padding="none"
->	<slot/>
-</Card>
+	<Card
+		class="max-w-full border-yellow-800
+    bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')] bg-cover bg-center bg-no-repeat py-10 md:px-16"
+		padding="none"
+	>
+		<slot />
+	</Card>
 </main>
 
-<footer class="max-w-full overflow-auto">
-	<Navbar class="bg-yellow-950 p-4 text-orange-100">
-		<Footer rounded color="form" class="min-w-full max-w-full overflow-auto text-center">
-			© Created as a sample chatbot website. All Rights Reserved.
-		</Footer>
-	</Navbar>
+<footer class="max-w-full overflow-auto p-4 text-center text-orange-300 bg-gradient-to-b from-yellow-950 to-stone-950">
+	© Created as a sample chatbot website.
 </footer>
