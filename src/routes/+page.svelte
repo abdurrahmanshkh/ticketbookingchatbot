@@ -18,6 +18,9 @@
 					body: JSON.stringify({ message })
 				});
 
+				// Clear the input field
+				message = '';
+
 				const data = await response.json();
 
 				// Append the bot's response to the chat
@@ -32,9 +35,6 @@
 					{ user: 'Bot', text: 'Something went wrong. Please try again later.' }
 				];
 			}
-
-			// Clear the input field
-			message = '';
 		}
 	}
 </script>
@@ -44,7 +44,7 @@
     bg-cover bg-center bg-no-repeat py-10 md:px-16"
 >
 	<!-- Gallery -->
-	<Card class="max-w-full space-y-4 bg-stone-100 bg-opacity-60 text-inherit">
+	<Card class="max-w-full space-y-4 border-stone-300 bg-stone-100 bg-opacity-60 text-inherit">
 		<h2 class="self-start text-2xl font-bold">Gallery</h2>
 		<Carousel {images} {forward} let:Indicators let:Controls class="min-h-96" duration="2000">
 			<Controls />
@@ -54,7 +54,7 @@
 
 	<section id="about" class="mt-8 grid max-w-full gap-8 md:grid-cols-2">
 		<!-- About -->
-		<Card class="max-w-full bg-orange-100 bg-opacity-60  text-inherit">
+		<Card class="max-w-full border-orange-200 bg-orange-100 bg-opacity-60 text-inherit">
 			<h2 class="mb-4 text-2xl font-bold">
 				Welcome to the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS)
 			</h2>
@@ -78,25 +78,39 @@
 		</Card>
 
 		<!-- Chatbot -->
-		<Card class="max-w-full max-h-[590px] min-h-96 bg-red-100 bg-opacity-60 text-inherit">
-			<h2 class="mb-4 text-2xl font-bold">Chat with Our Ticket Booking Bot</h2>
-			<div class="chatbox mb-4 h-full overflow-y-auto rounded-lg bg-orange-50 bg-opacity-50 p-4">
-				{#each chatMessages as chat}
-					<p class={chat.user === 'Bot' ? 'text-blue-800' : 'text-gray-800'}>
-						<strong>{chat.user}:</strong>
-						{chat.text}
-					</p>
-				{/each}
-			</div>
-			<ButtonGroup class="w-full">
-				<Input
-					type="text"
-					bind:value={message}
-					placeholder="Type your message..."
-					on:keydown={(e) => e.key === 'Enter' && sendMessage()}
-				/>
-				<Button on:click={sendMessage} color="red">Send</Button>
-			</ButtonGroup>
+		<Card class="chat-container max-w-full border-gray-300 bg-gray-200 bg-opacity-60">
+			<h2 class="mb-4 text-center text-2xl font-bold text-gray-900">
+				Chat with Our Ticket Booking Bot
+			</h2>
+			<Card padding="sm" class="max-w-full bg-gray-100">
+				<div class="min-h-[325px] max-h-[325px] overflow-auto">
+					{#each chatMessages as chat}
+						<div
+							class={chat.user === 'Bot'
+								? 'mb-2 flex justify-start text-left text-black'
+								: 'mb-2 flex justify-end text-right text-white'}
+						>
+							<span
+								class={chat.user === 'Bot'
+									? 'md:max-w-80 max-w-72 rounded-xl bg-gray-300 p-3'
+									: 'md:max-w-80 max-w-72 rounded-xl bg-blue-700 p-3'}
+							>
+								{chat.text}
+							</span>
+						</div>
+					{/each}
+				</div>
+
+				<ButtonGroup class="">
+					<Input
+						type="text"
+						bind:value={message}
+						placeholder="Type your message..."
+						on:keydown={(e) => e.key === 'Enter' && sendMessage()}
+					/>
+					<Button on:click={sendMessage} color="dark">Send</Button>
+				</ButtonGroup>
+			</Card>
 		</Card>
 	</section>
 </main>
