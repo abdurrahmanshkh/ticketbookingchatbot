@@ -1,34 +1,37 @@
 <script>
 	import '../app.css';
-	import { Navbar, NavBrand, NavHamburger, Button, Input, Footer, FooterCopyright } from 'flowbite-svelte';
-  	import { SearchOutline } from 'flowbite-svelte-icons';
+	import { Navbar, Footer, Card } from 'flowbite-svelte';
 </script>
 
 <header class="max-w-full overflow-auto">
 	<Navbar class="bg-yellow-950 p-4">
-		<NavBrand href="/">
-			<span class="self-center whitespace-nowrap md:text-xl font-bold mr-2 text-orange-100">
+		<div>
+			<span class="self-center whitespace-nowrap md:text-xl font-bold text-orange-100">
 				Chhatrapati Shivaji Maharaj Vastu Sangrahalaya
 			</span>
 			<span class="self-center whitespace-nowrap md:text-xl font-semibold text-orange-100">
-				(CSMVS)
+				[CSMVS]
 			</span>
-		</NavBrand>
-		<NavBrand>
-			<span class="self-center whitespace-nowrap md:text-xl font-semibold text-red-100">
+		</div>
+		<div>
+			<span class="self-center whitespace-nowrap md:text-xl font-bold text-red-100">
 				Ticket Booking Chatbot
 			</span>
-		</NavBrand>
+		</div>
 	</Navbar>
 </header>
 
-<main style="min-height: 81.5vh;" class="max-w-full">
-	<slot/>
+<main class="bg-yellow-950">
+<Card
+	class="max-w-full bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')]
+    bg-cover bg-center bg-no-repeat py-10 md:px-16 border-yellow-800" padding="none"
+>	<slot/>
+</Card>
 </main>
 
 <footer class="max-w-full overflow-auto">
 	<Navbar class="bg-yellow-950 p-4 text-orange-100">
-		<Footer rounded color="form" class="w-full flex items-center text-center justify-center">
+		<Footer rounded color="form" class="min-w-full max-w-full overflow-auto text-center">
 			© Created as a sample chatbot website. All Rights Reserved.
 		</Footer>
 	</Navbar>
