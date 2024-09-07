@@ -1,5 +1,5 @@
 <script>
-	import { Input, Label, Button, Card, P } from 'flowbite-svelte';
+	import { Input, Label, Button, Card, P, A } from 'flowbite-svelte';
 	import {
 		Table,
 		TableBody,
@@ -13,7 +13,7 @@
 	let password = '';
 	let key = '1234';
 	var error = '';
-	var login = false;
+	var login = true;
 
 	function handleLogin(event) {
 		event.preventDefault();
@@ -49,12 +49,13 @@
 		<!-- Render the table -->
 		<Card class="max-w-full border-2 bg-gray-100 bg-opacity-60">
 			<div class="grid md:grid-cols-3">
-				<P class="text-xl font-bold md:col-span-2 md:mt-1">Tickets Booked</P>
+				<P class="text-2xl font-bold md:col-span-2 md:mt-1">Tickets Booked</P>
 				<Input placeholder="Search by Person" bind:value={searchTerm} class="mb-4" />
 			</div>
 			<Table shadow class="w-full table-auto text-left">
 				<TableHead class="border-2">
-					<TableHeadCell>Person</TableHeadCell>
+					<TableHeadCell>Ticket ID</TableHeadCell>
+					<TableHeadCell>Name</TableHeadCell>
 					<TableHeadCell>Quantity</TableHeadCell>
 					<TableHeadCell>Email</TableHeadCell>
 					<TableHeadCell>Date</TableHeadCell>
@@ -62,6 +63,11 @@
 				<TableBody>
 					{#each filteredTickets as ticket}
 						<TableBodyRow>
+							<TableBodyCell>
+								<A href={`/${ticket._id}`}>
+									{ticket._id}
+								</A>
+							</TableBodyCell>
 							<TableBodyCell>{ticket.person}</TableBodyCell>
 							<TableBodyCell>{ticket.number}</TableBodyCell>
 							<TableBodyCell>{ticket.email}</TableBodyCell>
