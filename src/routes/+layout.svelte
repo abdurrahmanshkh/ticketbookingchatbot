@@ -25,7 +25,7 @@
 
 <main class="bg-yellow-950">
 	<Card
-		class="max-w-full border-yellow-800
+		class="max-w-full border-yellow-800 min-h-[85vh]
     bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')] bg-cover bg-center bg-no-repeat py-10 md:px-16"
 		padding="none"
 	>
