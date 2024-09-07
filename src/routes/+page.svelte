@@ -1,14 +1,22 @@
 <script>
-	import { Button, ButtonGroup, Card, Carousel, Input } from 'flowbite-svelte';
+	import { Button, ButtonGroup, Card, Carousel, Input, Label } from 'flowbite-svelte';
+	import { tick } from 'svelte'; // Import tick to wait for DOM updates
+	import images from './images.json';
+
 	let message = '';
 	let chatMessages = [];
-	import images from './images.json';
 	let forward = true;
+
+	// Reference to chat container for scrolling
+	let chatContainer;
 
 	async function sendMessage() {
 		if (message.trim() !== '') {
 			// Add user message to the chat
 			chatMessages = [...chatMessages, { user: 'You', text: message }];
+
+			// Scroll to bottom after user message
+			scrollToBottom();
 
 			// Send message to the backend API for Dialogflow processing
 			try {
@@ -28,13 +36,28 @@
 					...chatMessages,
 					{ user: 'Bot', text: data.reply || "Sorry, I didn't understand that." }
 				];
+
+				// Wait for the DOM to update and then scroll to the bottom
+				await tick();
+				scrollToBottom();
 			} catch (error) {
 				console.error('Error communicating with chatbot API:', error);
 				chatMessages = [
 					...chatMessages,
 					{ user: 'Bot', text: 'Something went wrong. Please try again later.' }
 				];
+
+				// Wait for the DOM to update and then scroll to the bottom
+				await tick();
+				scrollToBottom();
 			}
+		}
+	}
+
+	// Function to scroll to the bottom of the chat container
+	function scrollToBottom() {
+		if (chatContainer) {
+			chatContainer.scrollTop = chatContainer.scrollHeight;
 		}
 	}
 </script>
@@ -79,7 +102,7 @@
 			Chat with Our Ticket Booking Bot
 		</h2>
 		<Card padding="sm" class="max-w-full bg-gray-100">
-			<div class="max-h-[325px] min-h-[325px] overflow-auto">
+			<div class="max-h-[325px] min-h-[325px] overflow-auto" bind:this={chatContainer}>
 				{#each chatMessages as chat}
 					<div
 						class={chat.user === 'Bot'
