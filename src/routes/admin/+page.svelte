@@ -64,7 +64,7 @@
 					{#each filteredTickets as ticket}
 						<TableBodyRow>
 							<TableBodyCell>
-								<A href={`/${ticket._id}`} class="text-blue-800">
+								<A href={`/admin/${ticket._id}`} class="text-blue-800">
 									{ticket._id}
 								</A>
 							</TableBodyCell>
