@@ -11,7 +11,7 @@ export const load = async () => {
 				'api-key': apiKey
 			},
 			body: JSON.stringify({
-				dataSource: 'cluster0',
+				dataSource: 'Cluster0',
 				database: 'test',
 				collection: 'tickets',
 				filter: {}
@@ -26,12 +26,12 @@ export const load = async () => {
 
 		// Return the fetched data as props to the page
 		return {
-			voters: data.documents || []
+			tickets: data.documents || []
 		};
 	} catch (error) {
 		console.error('Error fetching data:', error);
 		return {
-			voters: []
+			tickets: []
 		};
 	}
 };

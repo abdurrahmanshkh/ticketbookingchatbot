@@ -26,31 +26,46 @@
 	}
 
 	export let data; // The fetched data is passed as props to the page component
+	let searchTerm = ''; // Search term for filtering the tickets
 
-	let { voters } = data; // Destructure the voters from the data prop
+	let { tickets } = data; // Destructure the tickets from the data prop
+
+	$: filteredTickets = tickets.filter(
+		(ticket) => ticket.person.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+	);
+
+	// Helper function to format the date
+	function formatDate(dateString) {
+		const date = new Date(dateString);
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const year = date.getFullYear();
+		return `${day}-${month}-${year}`;
+	}
 </script>
 
 {#if login}
 	<main>
 		<!-- Render the table -->
-		<Card class="mx-auto max-w-full border-2 bg-gray-100">
+		<Card class="max-w-full border-2 bg-gray-100 bg-opacity-60">
 			<div class="grid md:grid-cols-3">
-				<P class="text-xl font-bold md:col-span-2 md:mt-2">Tickets Booked</P>
+				<P class="text-xl font-bold md:col-span-2 md:mt-1">Tickets Booked</P>
+				<Input placeholder="Search by Person" bind:value={searchTerm} class="mb-4" />
 			</div>
 			<Table shadow class="w-full table-auto text-left">
-				<TableHead>
+				<TableHead class="border-2">
 					<TableHeadCell>Person</TableHeadCell>
-					<TableHeadCell>EPIC No</TableHeadCell>
+					<TableHeadCell>Quantity</TableHeadCell>
 					<TableHeadCell>Email</TableHeadCell>
 					<TableHeadCell>Date</TableHeadCell>
 				</TableHead>
 				<TableBody>
-					{#each voters as voter}
+					{#each filteredTickets as ticket}
 						<TableBodyRow>
-							<TableBodyCell>{voter.person}</TableBodyCell>
-							<TableBodyCell>{voter.number}</TableBodyCell>
-							<TableBodyCell>{voter.email}</TableBodyCell>
-							<TableBodyCell>{voter.date}</TableBodyCell>
+							<TableBodyCell>{ticket.person}</TableBodyCell>
+							<TableBodyCell>{ticket.number}</TableBodyCell>
+							<TableBodyCell>{ticket.email}</TableBodyCell>
+							<TableBodyCell>{formatDate(ticket.date)}</TableBodyCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
