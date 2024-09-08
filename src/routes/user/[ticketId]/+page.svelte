@@ -47,12 +47,44 @@
 				// Update ticket payment status on the client side
 				ticket.payment = 'Done';
 				alert = 'Payment status updated successfully!';
+
+				// Call the function to send the email with the ticket
+				await sendEmail(ticket);
 			} else {
 				alert = 'Failed to update payment status.';
-				alertColor="red";
+				alertColor = 'red';
 			}
 		} catch (error) {
 			console.error('Error updating payment status:', error);
+		}
+	}
+
+	// Function to send email after payment is completed
+	async function sendEmail(ticket) {
+		try {
+			const response = await fetch(`/api/tickets/${ticket._id}/send-email`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					person: ticket.person,
+					email: ticket.email,
+					numberOfTickets: ticket.number,
+					date: formatDate(ticket.date)
+				})
+			});
+
+			const result = await response.json();
+
+			if (result.success) {
+				alert = 'Payment status updated and email sent successfully!';
+			} else {
+				alert = 'Payment updated, but failed to send email.';
+				alertColor = 'red';
+			}
+		} catch (error) {
+			console.error('Error sending email:', error);
 		}
 	}
 </script>
