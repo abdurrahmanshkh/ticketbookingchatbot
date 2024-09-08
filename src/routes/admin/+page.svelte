@@ -13,7 +13,7 @@
 	let password = '';
 	let key = '1234';
 	var error = '';
-	var login = true;
+	var login = false;
 
 	function handleLogin(event) {
 		event.preventDefault();
