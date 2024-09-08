@@ -1,5 +1,5 @@
 <script>
-	import { Input, Label, Button, Card, P, A } from 'flowbite-svelte';
+	import { Input, Label, Button, Card, P, A, ButtonGroup } from 'flowbite-svelte';
 	import {
 		Table,
 		TableBody,
@@ -30,9 +30,7 @@
 
 	let { tickets } = data; // Destructure the tickets from the data prop
 
-	$: filteredTickets = tickets.filter(
-		(ticket) => ticket.person.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-	);
+	let filterType = 'current'; // State to manage the filter type (current, upcoming, previous)
 
 	// Helper function to format the date
 	function formatDate(dateString) {
@@ -42,16 +40,58 @@
 		const year = date.getFullYear();
 		return `${day}-${month}-${year}`;
 	}
+
+	// Function to determine the filter type
+	function filterTickets(tickets, filterType) {
+		const today = new Date();
+		return tickets.filter((ticket) => {
+			const ticketDate = new Date(ticket.date);
+			if (filterType === 'current') {
+				return (
+					ticketDate.getDate() === today.getDate() &&
+					ticketDate.getMonth() === today.getMonth() &&
+					ticketDate.getFullYear() === today.getFullYear()
+				);
+			} else if (filterType === 'upcoming') {
+				return ticketDate > today;
+			} else if (filterType === 'previous') {
+				return ticketDate < today && ticketDate.getDate() !== today.getDate();
+			}
+		});
+	}
+
+	// Computed property for filtered tickets
+	$: filteredTickets = filterTickets(
+		tickets.filter(
+			(ticket) => ticket.person.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+		),
+		filterType
+	);
 </script>
 
 {#if login}
 	<main>
 		<!-- Render the table -->
 		<Card class="max-w-full border-2 bg-gray-100 bg-opacity-60">
-			<div class="grid md:grid-cols-3">
-				<P class="text-2xl font-bold md:col-span-2 md:mt-1">Tickets Booked</P>
-				<Input placeholder="Search by Person" bind:value={searchTerm} class="mb-4" />
+			<div class="gap-2 md:grid md:grid-cols-6 max-w-full text-center">
+				<P class="text-2xl font-bold md:mt-1">Bookings</P>
+				<ButtonGroup class="col-span-3 text-white w-full md:m-0 my-2">
+				<Button on:click={() => (filterType = 'current')} class="w-full max-h-10 bg-green-950 text-white"
+					color="green">
+					Current
+				</Button>
+				<Button on:click={() => (filterType = 'upcoming')} class="w-full max-h-10 bg-yellow-700 text-white"
+					color="yellow">
+					Upcoming
+				</Button>
+				<Button on:click={() => (filterType = 'previous')} class="w-full max-h-10 bg-red-900 text-white"
+					color="red">
+					Previous
+				</Button>
+				</ButtonGroup>
+				<Input placeholder="Search by Person" bind:value={searchTerm} class="mb-4 col-span-2" />
 			</div>
+			<div class="grid gap-2 md:grid-cols-3"></div>
 			<Table shadow class="w-full table-auto text-left">
 				<TableHead class="border-2">
 					<TableHeadCell>Ticket ID</TableHeadCell>
