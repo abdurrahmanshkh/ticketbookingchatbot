@@ -33,7 +33,7 @@
 	}
 </script>
 
-<main class="max-w-full flex justify-center">
+<main class="max-w-full max-h-full flex justify-center items-center my-auto">
 	{#if ticket}
 		<Card class="md:w-[60%] max-w-full border-2 bg-{color}-100 bg-opacity-50 text-gray-900">
 			<h1 class="mb-4 text-2xl font-bold">Ticket Details</h1>

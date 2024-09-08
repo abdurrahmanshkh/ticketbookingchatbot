@@ -90,7 +90,7 @@
 	}
 </script>
 
-<main class="flex max-w-full justify-center">
+<main class="max-w-full max-h-full flex justify-center items-center my-auto">
 	{#if ticket}
 		<Card class="max-w-full border-2 md:w-[60%] bg-{color}-100 bg-opacity-50 text-gray-900">
 			{#if alert}
