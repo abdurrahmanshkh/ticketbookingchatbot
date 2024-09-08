@@ -139,7 +139,7 @@ export async function POST({ request }) {
 			from: 'csmvschatbot@outlook.com',
 			to: email,
 			subject: 'Your Ticket Confirmation for CSMVS Museum, Mumbai',
-			text: `Dear ${person},\n\nThank you for booking your tickets to visit the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS) Museum in Mumbai.\n\nHere are your ticket details:\n\nVisitor Name: ${person}\nNumber of Tickets: ${numberOfTickets}\nDate of Visit: ${date}\n\nPlease find your e-ticket attached as a PDF.\n\nWe look forward to welcoming you at the museum.\n\nMuseum Address: CSMVS, Fort, Mumbai\nContact: +91 22 6958 4400\n\nBest regards,\nCSMVS Museum Team`,
+			text: `Dear ${person},\n\nThank you for booking your tickets to visit the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS) Museum in Mumbai.\n\nHere are your ticket details:\n\nTicket ID: ${ticketId}\nVisitor Name: ${person}\nNumber of Tickets: ${numberOfTickets}\nDate of Visit: ${date}\n\nPlease find your e-ticket attached as a PDF.\n\nYou can also view your ticket status online using the following link:\n\nhttps://ticketbookingchatbot-production.up.railway.app/user/${ticketId}\n\nWe look forward to welcoming you at the museum.\n\nMuseum Address: CSMVS, Fort, Mumbai\nContact: +91 22 6958 4400\n\nBest regards,\nCSMVS Museum Team`,
 			attachments: [
 				{
 					filename: 'CSMVS_Ticket.pdf',

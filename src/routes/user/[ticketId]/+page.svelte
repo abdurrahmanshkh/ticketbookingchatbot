@@ -59,6 +59,28 @@
 		}
 	}
 
+	//Function to cancel the ticket
+	async function cancelTicket() {
+		try {
+			const response = await fetch(`/api/tickets/${ticket._id}/cancel`, {
+				method: 'POST'
+			});
+
+			const result = await response.json();
+
+			if (result.success) {
+				// Update ticket payment status on the client side
+				ticket.cancelled = true;
+				alert = 'Ticket cancelled successfully!';
+			} else {
+				alert = 'Failed to cancel ticket.';
+				alertColor = 'red';
+			}
+		} catch (error) {
+			console.error('Error cancelling ticket:', error);
+		}
+	}
+
 	// Function to send email after payment is completed
 	async function sendEmail(ticket) {
 		try {
@@ -108,10 +130,18 @@
 				<strong>Status:</strong>
 				{getTicketStatus(ticket.date)}
 			</p>
-			{#if ticket.payment === 'Pending'}
+			{#if ticket.payment === 'Pending' && !ticket.cancelled}
 				<div class="text-center">
 					<Button on:click={updatePaymentStatus} color="red" class="mt-5 min-w-48">Pay Now</Button>
 				</div>
+			{/if}
+			{#if ticket.payment === 'Done' && !ticket.cancelled}
+				<div class="text-center">
+					<Button on:click={cancelTicket} color="red" class="mt-5 min-w-48">Cancel Ticket</Button>
+				</div>
+			{/if}
+			{#if ticket.cancelled}
+				<p class="mt-2 text-xl font-bold text-red-800">This ticket has been cancelled.</p>
 			{/if}
 		</Card>
 	{:else}

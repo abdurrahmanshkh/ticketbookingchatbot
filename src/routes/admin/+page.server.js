@@ -14,7 +14,7 @@ export const load = async () => {
 				dataSource: 'Cluster0',
 				database: 'test',
 				collection: 'tickets',
-				filter: {payment:"Done"}
+				filter: { payment: 'Done', cancelled: false }
 			})
 		});
 
