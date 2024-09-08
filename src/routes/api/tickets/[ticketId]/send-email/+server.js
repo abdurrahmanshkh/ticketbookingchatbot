@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import QRCode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,8 +18,20 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
+// Function to create a QR code image
+async function generateQRCode(url) {
+	try {
+		const qrCodeDataUrl = await QRCode.toDataURL(url);
+		const base64Data = qrCodeDataUrl.replace(/^data:image\/png;base64,/, '');
+		return Buffer.from(base64Data, 'base64');
+	} catch (error) {
+		console.error('Error generating QR code:', error);
+		throw error;
+	}
+}
+
 // Function to create a PDF for the ticket
-async function createPDF(person, numberOfTickets, date) {
+async function createPDF(person, numberOfTickets, date, ticketId) {
 	const pdfDoc = await PDFDocument.create();
 	const page = pdfDoc.addPage([400, 600]);
 	const { width, height } = page.getSize();
@@ -39,7 +52,7 @@ async function createPDF(person, numberOfTickets, date) {
 	page.drawText('CSMVS Museum, Mumbai', {
 		x: 30,
 		y: height - 200,
-		size: fontSize,
+		size: fontSize + 4,
 		font: font,
 		color: rgb(0, 0.4, 0.6)
 	});
@@ -62,7 +75,7 @@ async function createPDF(person, numberOfTickets, date) {
 
 	page.drawText(`No. of Tickets: ${numberOfTickets}`, {
 		x: 30,
-		y: height - 320,
+		y: height - 310,
 		size: fontSize,
 		font: font,
 		color: rgb(0, 0, 0)
@@ -70,7 +83,7 @@ async function createPDF(person, numberOfTickets, date) {
 
 	page.drawText(`Date of Visit: ${date}`, {
 		x: 30,
-		y: height - 360,
+		y: height - 340,
 		size: fontSize,
 		font: font,
 		color: rgb(0, 0, 0)
@@ -78,7 +91,7 @@ async function createPDF(person, numberOfTickets, date) {
 
 	page.drawText(`Museum Address: CSMVS, Fort, Mumbai`, {
 		x: 30,
-		y: height - 400,
+		y: height - 370,
 		size: fontSize,
 		font: font,
 		color: rgb(0, 0, 0)
@@ -86,20 +99,40 @@ async function createPDF(person, numberOfTickets, date) {
 
 	page.drawText(`Contact: +91 22 6958 4400`, {
 		x: 30,
-		y: height - 440,
+		y: height - 400,
 		size: fontSize,
 		font: font,
 		color: rgb(0, 0, 0)
+	});
+
+	page.drawText(`Verification QR:`, {
+		x: 30,
+		y: height - 500,
+		size: fontSize,
+		font: font,
+		color: rgb(0, 0, 0)
+	});
+
+	// Generate the QR code and add it to the PDF
+	const qrCodeUrl = `https://ticketbookingchatbot-production.up.railway.app/user/${ticketId}`;
+	const qrCodeImage = await generateQRCode(qrCodeUrl);
+	const qrCodeImageEmbed = await pdfDoc.embedPng(qrCodeImage);
+	const qrCodeDims = qrCodeImageEmbed.scale(0.7); // Increase the size of the QR code
+	page.drawImage(qrCodeImageEmbed, {
+		x: 140,
+		y: 40, // Position the QR code at the bottom of the page
+		width: qrCodeDims.width,
+		height: qrCodeDims.height
 	});
 
 	return await pdfDoc.save();
 }
 
 export async function POST({ request }) {
-	const { person, email, numberOfTickets, date } = await request.json();
+	const { person, email, numberOfTickets, date, ticketId } = await request.json();
 
 	try {
-		const pdfBuffer = await createPDF(person, numberOfTickets, date);
+		const pdfBuffer = await createPDF(person, numberOfTickets, date, ticketId);
 
 		// Define email options
 		const mailOptions = {

@@ -71,7 +71,8 @@
 					person: ticket.person,
 					email: ticket.email,
 					numberOfTickets: ticket.number,
-					date: formatDate(ticket.date)
+					date: formatDate(ticket.date),
+					ticketId: ticket._id ,
 				})
 			});
 

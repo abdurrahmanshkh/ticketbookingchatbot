@@ -41,6 +41,7 @@
 			<p class="text-xl mb-1"><strong>Quantity:</strong> {ticket.number}</p>
 			<p class="text-xl mb-1"><strong>Email:</strong> {ticket.email}</p>
 			<p class="text-xl mb-1"><strong>Date:</strong> {formatDate(ticket.date)}</p>
+			<p class="mb-1 text-xl"><strong>Payment:</strong> {ticket.payment}</p>
 			<p class="text-xl text-{color}-900"><strong>Status:</strong> {getTicketStatus(ticket.date)}</p>
 		</Card>
 	{:else}
