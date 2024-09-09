@@ -80,12 +80,45 @@
 				// Update ticket payment status on the client side
 				ticket.cancelled = true;
 				alert = 'Ticket cancelled successfully!';
+
+				// Call the function to send the email with the ticket
+				await sendCancellationEmail(ticket);
 			} else {
 				alert = 'Failed to cancel ticket.';
 				alertColor = 'red';
 			}
 		} catch (error) {
 			console.error('Error cancelling ticket:', error);
+		}
+	}
+
+	// Function to send email after cancellation
+	async function sendCancellationEmail(ticket) {
+		try {
+			const response = await fetch(`/api/tickets/${ticket._id}/cancel-email`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					person: ticket.person,
+					email: ticket.email,
+					numberOfTickets: ticket.number,
+					date: formatDate(ticket.date),
+					ticketId: ticket._id,
+				})
+			});
+
+			const result = await response.json();
+
+			if (result.success) {
+				alert = 'Cancellation email sent successfully!';
+			} else {
+				alert = 'Cancellation completed, but failed to send email.';
+				alertColor = 'red';
+			}
+		} catch (error) {
+			console.error('Error sending cancellation email:', error);
 		}
 	}
 
