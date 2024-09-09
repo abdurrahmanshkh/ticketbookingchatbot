@@ -20,14 +20,22 @@
 		const currentDate = new Date();
 		const date = new Date(ticketDate);
 
-		if (currentDate < date) {
-			color = "yellow"; // Set color for upcoming date
+		if (
+			date.getDate() > currentDate.getDate() &&
+			date.getMonth() >= currentDate.getMonth() &&
+			date.getFullYear() >= currentDate.getFullYear()
+		) {
+			color = 'yellow'; // Set color for upcoming date
 			return 'Valid on upcoming date'; // Status for a future ticket date
-		} else if (currentDate.toDateString() === date.toDateString()) {
-			color = "green"; // Set color for today's ticket
+		} else if (
+			date.getDate() === currentDate.getDate() &&
+			date.getMonth() === currentDate.getMonth() &&
+			date.getFullYear() === currentDate.getFullYear()
+		) {
+			color = 'green'; // Set color for today's ticket
 			return 'Valid for today'; // Status for the ticket date being today
 		} else {
-			color = "red"; // Set color for expired ticket
+			color = 'red'; // Set color for expired ticket
 			return 'Validity expired'; // Status for a past ticket date
 		}
 	}

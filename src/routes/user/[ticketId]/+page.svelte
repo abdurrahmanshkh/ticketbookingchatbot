@@ -22,10 +22,18 @@
 		const currentDate = new Date();
 		const date = new Date(ticketDate);
 
-		if (currentDate < date) {
+		if (
+			date.getDate() > currentDate.getDate() &&
+			date.getMonth() >= currentDate.getMonth() &&
+			date.getFullYear() >= currentDate.getFullYear()
+		) {
 			color = 'yellow'; // Set color for upcoming date
 			return 'Valid on upcoming date'; // Status for a future ticket date
-		} else if (currentDate.toDateString() === date.toDateString()) {
+		} else if (
+			date.getDate() === currentDate.getDate() &&
+			date.getMonth() === currentDate.getMonth() &&
+			date.getFullYear() === currentDate.getFullYear()
+		) {
 			color = 'green'; // Set color for today's ticket
 			return 'Valid for today'; // Status for the ticket date being today
 		} else {
@@ -94,7 +102,7 @@
 					email: ticket.email,
 					numberOfTickets: ticket.number,
 					date: formatDate(ticket.date),
-					ticketId: ticket._id ,
+					ticketId: ticket._id
 				})
 			});
 
@@ -112,7 +120,7 @@
 	}
 </script>
 
-<main class="max-w-full max-h-full flex justify-center items-center my-auto">
+<main class="my-auto flex max-h-full max-w-full items-center justify-center">
 	{#if ticket}
 		<Card class="max-w-full border-2 md:w-[60%] bg-{color}-100 bg-opacity-50 text-gray-900">
 			{#if alert}
@@ -135,7 +143,7 @@
 					<Button on:click={updatePaymentStatus} color="red" class="mt-5 min-w-48">Pay Now</Button>
 				</div>
 			{/if}
-			{#if ticket.payment === 'Done' && !ticket.cancelled}
+			{#if ticket.payment === 'Done' && !ticket.cancelled && color === 'yellow'}
 				<div class="text-center">
 					<Button on:click={cancelTicket} color="red" class="mt-5 min-w-48">Cancel Ticket</Button>
 				</div>

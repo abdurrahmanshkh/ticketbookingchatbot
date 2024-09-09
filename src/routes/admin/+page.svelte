@@ -53,9 +53,17 @@
 					ticketDate.getFullYear() === today.getFullYear()
 				);
 			} else if (filterType === 'upcoming') {
-				return ticketDate > today;
+				return (
+					ticketDate.getDate() > today.getDate() &&
+					ticketDate.getMonth() >= today.getMonth() &&
+					ticketDate.getFullYear() >= today.getFullYear()
+				);
 			} else if (filterType === 'previous') {
-				return ticketDate < today && ticketDate.getDate() !== today.getDate();
+				return (
+					ticketDate.getDate() < today.getDate() &&
+					ticketDate.getMonth() <= today.getMonth() &&
+					ticketDate.getFullYear() <= today.getFullYear()
+				);;
 			}
 		});
 	}
