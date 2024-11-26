@@ -46,7 +46,6 @@
 		"@sveltejs/adapter-vercel": "^5.4.8",
 		"dialogflow": "^4.0.3",
 		"dotenv": "^16.4.5",
-		"node-fetch": "^3.3.2",
 		"nodemailer": "^6.9.15",
 		"pdf-lib": "^1.17.1",
 		"qrcode": "^1.5.4"
