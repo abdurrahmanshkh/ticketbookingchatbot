@@ -114,7 +114,7 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 	});
 
 	// Generate the QR code and add it to the PDF
-	const qrCodeUrl = `https://ticketbookingchatbot-production.up.railway.app/user/${ticketId}`;
+	const qrCodeUrl = `https://ticketbookingchatbot.vercel.app/user/${ticketId}`;
 	const qrCodeImage = await generateQRCode(qrCodeUrl);
 	const qrCodeImageEmbed = await pdfDoc.embedPng(qrCodeImage);
 	const qrCodeDims = qrCodeImageEmbed.scale(0.7); // Increase the size of the QR code
@@ -139,7 +139,7 @@ export async function POST({ request }) {
 			from: 'csmvschatbot@outlook.com',
 			to: email,
 			subject: 'Your Ticket Confirmation for CSMVS Museum, Mumbai',
-			text: `Dear ${person},\n\nThank you for booking your tickets to visit the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS) Museum in Mumbai.\n\nHere are your ticket details:\n\nTicket ID: ${ticketId}\nVisitor Name: ${person}\nNumber of Tickets: ${numberOfTickets}\nDate of Visit: ${date}\n\nPlease find your e-ticket attached as a PDF.\n\nYou can also view your ticket status online using the following link:\n\nhttps://ticketbookingchatbot-production.up.railway.app/user/${ticketId}\n\nWe look forward to welcoming you at the museum.\n\nMuseum Address: CSMVS, Fort, Mumbai\nContact: +91 22 6958 4400\n\nBest regards,\nCSMVS Museum Team`,
+			text: `Dear ${person},\n\nThank you for booking your tickets to visit the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS) Museum in Mumbai.\n\nHere are your ticket details:\n\nTicket ID: ${ticketId}\nVisitor Name: ${person}\nNumber of Tickets: ${numberOfTickets}\nDate of Visit: ${date}\n\nPlease find your e-ticket attached as a PDF.\n\nYou can also view your ticket status online using the following link:\n\nhttps://ticketbookingchatbot.vercel.app/user/${ticketId}\n\nWe look forward to welcoming you at the museum.\n\nMuseum Address: CSMVS, Fort, Mumbai\nContact: +91 22 6958 4400\n\nBest regards,\nCSMVS Museum Team`,
 			attachments: [
 				{
 					filename: 'CSMVS_Ticket.pdf',
