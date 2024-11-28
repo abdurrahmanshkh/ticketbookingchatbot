@@ -44,12 +44,8 @@
 	"dependencies": {
 		"@google-cloud/dialogflow": "^6.8.0",
 		"@sveltejs/adapter-vercel": "^5.4.8",
-		"body-parser": "^1.20.3",
 		"dialogflow": "^4.0.3",
 		"dotenv": "^16.4.5",
-		"express": "^4.21.1",
-		"mongoose": "^8.8.3",
-		"node-fetch": "^3.3.2",
 		"nodemailer": "^6.9.15",
 		"pdf-lib": "^1.17.1",
 		"qrcode": "^1.5.4"
