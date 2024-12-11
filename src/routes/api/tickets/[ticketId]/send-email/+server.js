@@ -1,8 +1,7 @@
 import nodemailer from 'nodemailer';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import QRCode from 'qrcode';
-import fs from 'fs';
-import path from 'path';
+import fetch from 'node-fetch'; // Use fetch to load the online image
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -40,7 +39,12 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 	const fontSize = 14;
 
 	const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-	const logoBytes = fs.readFileSync('logo.png');
+
+	// Fetch the logo image from the online source
+	const response = await fetch(
+		'https://lh3.googleusercontent.com/pw/AP1GczMuApRRrPbzYFxgyhirNzwUve52YI1RV5-4Iw4TmW4KSn1G8ha3GujVzdNTiXn6C0k-Mhz5ZYArzrzST5nhOqJCw-e6vOpqgnMovoJf-VrQ3nXSjCk3IBWZuL-Fo1-essvSBxYGcFG0uf14Bopu-h3yfg=w1483-h855-s-no-gm'
+	);
+	const logoBytes = await response.arrayBuffer();
 	const logoImage = await pdfDoc.embedPng(logoBytes);
 
 	const logoDims = logoImage.scale(0.15);
