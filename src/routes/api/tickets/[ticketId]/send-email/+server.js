@@ -40,7 +40,7 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 	const fontSize = 14;
 
 	const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-	const logoBytes = fs.readFileSync(path.join('static', 'logo.png'));
+	const logoBytes = fs.readFileSync('static/logo.png');
 	const logoImage = await pdfDoc.embedPng(logoBytes);
 
 	const logoDims = logoImage.scale(0.15);
