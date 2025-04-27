@@ -1,0 +1,12 @@
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "com.ticketbookingchatbot.app",
+			"sha256_cert_fingerprints": [
+				"EE:6E:45:6D:21:19:D0:65:65:FD:FF:06:E6:11:63:F3:2F:AC:2A:9B:7D:95:56:29:76:F9:DE:1C:CC:C8:6A:F1"
+			]
+		}
+	}
+]

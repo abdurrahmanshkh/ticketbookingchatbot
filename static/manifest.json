@@ -1,0 +1,33 @@
+{
+	"name": "Ticket Booking Chatbot",
+	"short_name": "Booking Chatbot",
+	"description": "Ticket Booking Chatbot",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#007bff",
+	"icons": [
+		{
+			"src": "/favicon1.png",
+			"sizes": "192x192",
+			"type": "image/jpeg"
+		},
+		{
+			"src": "/favicon.png",
+			"sizes": "512x512",
+			"type": "image/jpeg"
+		}
+	],
+	"orientation": "portrait",
+	"lang": "en",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"scope": "/",
+	"screenshots": [
+		{
+			"src": "https://lh3.googleusercontent.com/pw/AP1GczMEg8I_NmalrcoWGP93Ss-MnrKaLdHnzKt8fKITknTd2OwVfrFh2LPHrMl_ljVEnlqC8IxxIIcEdYyBHgYV9d9KjdpDpRwecJ_Y0APEeZi8cf96YoWb3XkdVW0T9wCV2dCCS830ns9g_c4bju2r8Il-=w512-h512-s-no-gm?authuser=0",
+			"type": "image/jpeg",
+			"sizes": "684x855"
+		}
+	]
+}
