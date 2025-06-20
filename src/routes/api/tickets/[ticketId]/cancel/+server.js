@@ -1,18 +1,12 @@
 import { json } from '@sveltejs/kit';
-import { MongoClient, ObjectId } from 'mongodb';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-const client = new MongoClient(uri);
+import { ObjectId } from 'mongodb';
+import { getDb } from '$lib/server/mongo.js';
 
 export async function POST({ params }) {
 	const ticketId = params.ticketId;
 
 	try {
-		await client.connect();
-		const db = client.db('test');
+		const db = await getDb();
 		const collection = db.collection('tickets');
 
 		const result = await collection.updateOne(
@@ -24,7 +18,5 @@ export async function POST({ params }) {
 	} catch (error) {
 		console.error('Error updating ticket status:', error);
 		return json({ success: false, error: error.message });
-	} finally {
-		await client.close();
 	}
 }
