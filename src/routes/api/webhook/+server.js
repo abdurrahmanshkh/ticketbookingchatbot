@@ -1,69 +1,17 @@
 import { json } from '@sveltejs/kit';
-import mongoose from 'mongoose';
+import { getDb } from '$lib/server/mongo.js';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const apiKey = 'qF3wveUq2Z2WAvnd5Q83NHdZ5NFEt6H9iQw0jmWFHNnILl0jIozEiKu0Znpkliay';
-const mongoEndpoint =
-	'https://ap-southeast-1.aws.data.mongodb-api.com/app/data-gvblzlp/endpoint/data/v1/action/findOne';
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI);
-
-// Define schema and model for ticket bookings
-const ticketSchema = new mongoose.Schema(
-	{
-		person: String,
-		number: Number,
-		email: String,
-		date: String,
-		payment: String,
-		cancelled: Boolean
-	},
-	{
-		timestamps: true
-	}
-);
-
-const Ticket = mongoose.model('Ticket', ticketSchema);
-
-// Function to format date in DD-MM-YYYY format
 function formatDate(isoDateString) {
 	const date = new Date(isoDateString);
 	const day = String(date.getUTCDate()).padStart(2, '0');
-	const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+	const month = String(date.getUTCMonth() + 1).padStart(2, '0');
 	const year = date.getUTCFullYear();
 	return `${day}-${month}-${year}`;
 }
 
-async function fetchDataFromMongoDB(filter = {}) {
-	try {
-		const response = await fetch(mongoEndpoint, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'api-key': apiKey
-			},
-			body: JSON.stringify({
-				dataSource: 'Cluster0',
-				database: 'test',
-				collection: 'tickets',
-				filter: filter
-			})
-		});
-		if (!response.ok) {
-			throw new Error(`Error fetching data: ${response.statusText}`);
-		}
-		const data = await response.json();
-		return data;
-	} catch (error) {
-		console.error('Error fetching data from MongoDB:', error);
-		throw error;
-	}
-}
-
-// Function to send email using Brevo API
 async function sendEmailWithBrevo(email, person, numberOfTickets, date, paymentUrl) {
 	const mailPayload = {
 		sender: {
@@ -191,74 +139,51 @@ async function sendEmailWithBrevo(email, person, numberOfTickets, date, paymentU
 			},
 			body: JSON.stringify(mailPayload)
 		});
-
-		if (!response.ok) {
-			throw new Error(`Email sending failed: ${response.statusText}`);
-		}
-		console.log('Email sent successfully');
+		if (!response.ok) throw new Error(`Email failed: ${response.statusText}`);
 	} catch (error) {
-		console.error('Error sending email:', error);
+		console.error('Email error:', error);
 		throw error;
 	}
 }
 
 export async function POST({ request }) {
 	const { queryResult } = await request.json();
-
 	const person = queryResult.parameters.person.name;
-	const numberOfTickets = queryResult.parameters.number;
+	const number = queryResult.parameters.number;
 	const email = queryResult.parameters.email;
 	const date = queryResult.parameters['date-time'] || 'not specified';
 
-	const newBooking = new Ticket({
-		person: person,
-		number: numberOfTickets,
-		email: email,
-		date: date,
-		payment: 'Pending',
-		cancelled: false
-	});
-
 	try {
-		await newBooking.save();
+		const db = await getDb();
+		const collection = db.collection('tickets');
 
-		const data = await fetchDataFromMongoDB({
-			person: person,
-			number: numberOfTickets,
-			email: email,
-			date: date,
-			cancelled: false
+		const insertResult = await collection.insertOne({
+			person,
+			number,
+			email,
+			date,
+			payment: 'Pending',
+			cancelled: false,
+			createdAt: new Date(),
+			updatedAt: new Date()
 		});
 
-		const paymentUrl = `https://ticketbookingchatbot.vercel.app/user/${data.document._id}`;
+		const insertedId = insertResult.insertedId;
+		const paymentUrl = `https://ticketbookingchatbot.vercel.app/user/${insertedId}`;
 
-		await sendEmailWithBrevo(email, person, numberOfTickets, date, paymentUrl);
+		await sendEmailWithBrevo(email, person, number, date, paymentUrl);
 
+		const message = `${person}, your booking has been made successfully. A payment confirmation email has been sent to ${email}. Kindly complete the payment to confirm your booking.`;
 		return json({
-			fulfillmentText: `${person}, your booking has been made successfully. A payment confirmation email has been sent to ${email}. Kindly complete the payment to confirm your booking.`,
-			fulfillmentMessages: [
-				{
-					text: {
-						text: [
-							`${person}, your booking has been made successfully. A payment confirmation email has been sent to ${email}. Kindly complete the payment to confirm your booking.`
-						]
-					}
-				}
-			]
+			fulfillmentText: message,
+			fulfillmentMessages: [{ text: { text: [message] } }]
 		});
 	} catch (error) {
-		console.error('Error processing booking:', error);
+		console.error('Booking error:', error);
+		const message = `Sorry ${person}, there was an error processing your booking. Please try again later.`;
 		return json({
-			fulfillmentText: `Sorry ${person}, there was an error processing your booking. Please try again later.`,
-			fulfillmentMessages: [
-				{
-					text: {
-						text: [
-							`Sorry ${person}, there was an error processing your booking. Please try again later.`
-						]
-					}
-				}
-			]
+			fulfillmentText: message,
+			fulfillmentMessages: [{ text: { text: [message] } }]
 		});
 	}
 }
