@@ -1,39 +1,32 @@
-export const load = async ({ params }) => {
-	const apiKey = 'qF3wveUq2Z2WAvnd5Q83NHdZ5NFEt6H9iQw0jmWFHNnILl0jIozEiKu0Znpkliay';
-	const endpoint =
-		'https://ap-southeast-1.aws.data.mongodb-api.com/app/data-gvblzlp/endpoint/data/v1/action/findOne';
+import { MongoClient, ObjectId } from 'mongodb';
+import dotenv from 'dotenv';
 
-	const ticketId = params.ticketId; // Get the ticket ID from the URL
+dotenv.config();
+
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const client = new MongoClient(uri);
+
+export const load = async ({ params }) => {
+	const ticketId = params.ticketId;
 
 	try {
-		const response = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'api-key': apiKey
-			},
-			body: JSON.stringify({
-				dataSource: 'Cluster0',
-				database: 'test',
-				collection: 'tickets',
-				filter: { _id: { $oid: ticketId } } // Correctly find ticket by its ObjectId
-			})
-		});
+		await client.connect();
+		const db = client.db('test');
+		const collection = db.collection('tickets');
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
-		}
+		// Convert ticketId to ObjectId and fetch the ticket
+		const ticket = await collection.findOne({ _id: new ObjectId(ticketId) });
 
-		const data = await response.json();
-
-		// Return the fetched ticket data as props to the page
+		// Convert _id to string for SvelteKit serialization
 		return {
-			ticket: data.document || null
+			ticket: ticket ? { ...ticket, _id: ticket._id.toString() } : null
 		};
 	} catch (error) {
 		console.error('Error fetching ticket data:', error);
 		return {
 			ticket: null
 		};
+	} finally {
+		await client.close();
 	}
 };
