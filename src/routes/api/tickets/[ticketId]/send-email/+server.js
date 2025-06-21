@@ -197,6 +197,15 @@ export async function POST({ request }) {
     .content .ticket-details p {
       margin: 5px 0;
     }
+	.disclaimer {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #fff4e5;
+      border-left: 4px solid #ffa726;
+      color: #666666;
+      font-size: 14px;
+      border-radius: 3px;
+    }
     .footer {
       text-align: center;
       padding: 10px 20px;
@@ -239,6 +248,9 @@ export async function POST({ request }) {
       <p>We look forward to welcoming you at the museum.</p>
       <p><strong>Museum Address:</strong> CSMVS, Fort, Mumbai</p>
       <p><strong>Contact:</strong> +91 22 6958 4400</p>
+    </div>
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This email is sent from an unofficial demo chatbot for CSMVS and is not part of the museum’s official booking system. The payment link is simulated and will <em>not</em> process real transactions.
     </div>
     <div class="footer">
       <p>&copy; 2024 CSMVS Museum. All rights reserved.</p>
