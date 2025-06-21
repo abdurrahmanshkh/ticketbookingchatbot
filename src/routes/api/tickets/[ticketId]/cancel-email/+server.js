@@ -77,6 +77,14 @@ export async function POST({ request }) {
     .content .ticket-details p {
       margin: 5px 0;
     }
+	  .disclaimer {
+      padding: 15px;
+      background-color: #fff4e5;
+      border-left: 4px solid #ffa726;
+      color: #666666;
+      font-size: 14px;
+      border-radius: 3px;
+    }
     .footer {
       text-align: center;
       padding: 10px 20px;
@@ -116,6 +124,11 @@ export async function POST({ request }) {
       <p>If you have any questions or need further assistance, please contact us at <strong>+91 22 6958 4400</strong> or reply to this email.</p>
       <p>We hope to welcome you to the museum in the future.</p>
     </div>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This email is sent from an unofficial demo chatbot for CSMVS and is not part of the museum’s official booking system. The payment link is simulated and will <em>not</em> process real transactions.
+    </div>
+
     <div class="footer">
       <p>&copy; 2024 CSMVS Museum. All rights reserved.</p>
     </div>
