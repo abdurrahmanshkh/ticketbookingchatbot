@@ -86,6 +86,7 @@ export async function POST({ request }) {
       border-radius: 3px;
     }
     .footer {
+      margin-top: 20px;
       text-align: center;
       padding: 10px 20px;
       background-color: #f4f4f4;
