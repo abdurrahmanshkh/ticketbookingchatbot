@@ -1,10 +1,11 @@
 <script>
-	import { Button, ButtonGroup, Card, Carousel, Input } from 'flowbite-svelte';
+	import { Button, ButtonGroup, Card, Carousel, Input, Alert } from 'flowbite-svelte';
 	import { tick } from 'svelte';
 	import images from './images.json';
 
 	let message = '';
 	let chatMessages = [];
+	let isLoading = false;
 	let forward = true;
 	let buttonText = 'Expand';
 	let expand = false;
@@ -15,54 +16,54 @@
 	let chatContainer;
 
 	async function sendMessage() {
-		if (message.trim() !== '') {
-			// Add user message to the chat
-			chatMessages = [...chatMessages, { user: 'You', text: message }];
+		if (message.trim() === '' || isLoading) return;
 
-			// Scroll to bottom after user message
+		// Add user message to the chat
+		chatMessages = [...chatMessages, { user: 'You', text: message }];
+
+		// Clear the input field immediately
+		const userMessage = message;
+		message = '';
+
+		// Scroll to bottom after user message
+		scrollToBottom();
+
+		// Show typing indicator
+		isLoading = true;
+		chatMessages = [...chatMessages, { user: 'Bot', text: 'Typing...', loading: true }];
+		scrollToBottom();
+
+		try {
+			const response = await fetch('/api/detect-intent', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ message: userMessage })
+			});
+
+			const data = await response.json();
+			const reply = data.reply || "Sorry, I didn't understand that.";
+
+			// Remove typing indicator and append real reply
+			chatMessages = chatMessages.filter((m) => !m.loading);
+			chatMessages = [...chatMessages, { user: 'Bot', text: reply }];
+		} catch (error) {
+			console.error('Error communicating with chatbot API:', error);
+			chatMessages = chatMessages.filter((m) => !m.loading);
+			chatMessages = [
+				...chatMessages,
+				{ user: 'Bot', text: 'Something went wrong. Please try again later.' }
+			];
+		} finally {
+			isLoading = false;
+			// Wait for DOM update then scroll
+			await tick();
 			scrollToBottom();
-
-			// Send message to the backend API for Dialogflow processing
-			try {
-				const response = await fetch('/api/detect-intent', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ message })
-				});
-
-				// Clear the input field
-				message = '';
-
-				const data = await response.json();
-
-				// Append the bot's response to the chat
-				chatMessages = [
-					...chatMessages,
-					{ user: 'Bot', text: data.reply || "Sorry, I didn't understand that." }
-				];
-
-				// Wait for the DOM to update and then scroll to the bottom
-				await tick();
-				scrollToBottom();
-			} catch (error) {
-				console.error('Error communicating with chatbot API:', error);
-				chatMessages = [
-					...chatMessages,
-					{ user: 'Bot', text: 'Something went wrong. Please try again later.' }
-				];
-
-				// Wait for the DOM to update and then scroll to the bottom
-				await tick();
-				scrollToBottom();
-			}
 		}
 	}
 
 	// Function to scroll to the bottom of the chat container
 	function scrollToBottom() {
-		if (chatContainer) {
-			chatContainer.scrollTop = chatContainer.scrollHeight;
-		}
+		if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
 	}
 
 	function expandChatbot() {
@@ -79,6 +80,16 @@
 		}
 	}
 </script>
+
+<!-- Disclaimer Banner -->
+<Alert class="mb-4 border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-700" role="alert">
+	<p class="font-bold">Disclaimer</p>
+	<p>
+		This chatbot is an unofficial demo project and not the <strong>official</strong> ticket booking portal
+		for the Chhatrapati Shivaji Maharaj Vastu Sangrahalaya (CSMVS). Payments are simulated and will not
+		process real transactions.
+	</p>
+</Alert>
 
 <!-- Gallery -->
 <Card class="max-w-full space-y-4 border-stone-300 bg-stone-100 bg-opacity-60 text-gray-900">
@@ -143,14 +154,17 @@
 				{/each}
 			</div>
 
-			<ButtonGroup class="">
+			<ButtonGroup>
 				<Input
 					type="text"
 					bind:value={message}
 					placeholder="Type your message..."
 					on:keydown={(e) => e.key === 'Enter' && sendMessage()}
+					disabled={isLoading}
 				/>
-				<Button on:click={sendMessage} color="dark">Send</Button>
+				<Button on:click={sendMessage} color="dark" disabled={isLoading}>
+					{isLoading ? '...' : 'Send'}
+				</Button>
 			</ButtonGroup>
 		</Card>
 	</Card>
