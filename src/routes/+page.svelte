@@ -82,7 +82,7 @@
 </script>
 
 <!-- Disclaimer Banner -->
-<Alert class="mb-4 border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-700" role="alert">
+<Alert class="mb-4 border-l-4 border-yellow-500 bg-yellow-50 p-4 text-yellow-700" role="alert">
 	<p class="font-bold">Disclaimer</p>
 	<p>
 		This chatbot is an unofficial demo project and not the <strong>official</strong> ticket booking portal
