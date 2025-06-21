@@ -117,21 +117,21 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 		y: height - 430,
 		size: 10,
 		font: font,
-		color: rgb(254, 209, 106)
+		color: rgb(0.6, 0.2, 0.2)
 	});
 	page.drawText('official CSMVS booking system. It is NOT valid for entry and no real', {
 		x: 30,
 		y: height - 445,
 		size: 10,
 		font: font,
-		color: rgb(254, 209, 106)
+		color: rgb(0.6, 0.2, 0.2)
 	});
 	page.drawText('payment has been processed.', {
 		x: 30,
 		y: height - 460,
 		size: 10,
 		font: font,
-		color: rgb(254, 209, 106)
+		color: rgb(0.6, 0.2, 0.2)
 	});
 
 	page.drawText(`Verification QR:`, {
