@@ -34,7 +34,7 @@ async function generateQRCode(url) {
 // Function to create a PDF for the ticket
 async function createPDF(person, numberOfTickets, date, ticketId) {
 	const pdfDoc = await PDFDocument.create();
-	const page = pdfDoc.addPage([400, 600]);
+	const page = pdfDoc.addPage([400, 660]);
 	const { width, height } = page.getSize();
 	const fontSize = 14;
 
@@ -111,24 +111,32 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 		color: rgb(0, 0, 0)
 	});
 
-	// Disclaimer section
-	const disclaimerText =
-		'Disclaimer: This ticket is part of a demo project and is not issued by the official CSMVS booking system. It is NOT valid for entry and no real payment has been processed.';
-	const disclaimerFontSize = 10;
-	const disclaimerLines = splitTextIntoLines(disclaimerText, 340, disclaimerFontSize, font);
-	disclaimerLines.forEach((line, idx) => {
-		page.drawText(line, {
-			x: 30,
-			y: height - 430 - idx * (disclaimerFontSize + 2),
-			size: disclaimerFontSize,
-			font: font,
-			color: rgb(0.5, 0.5, 0.5)
-		});
+	// Disclaimer lines
+	page.drawText('Disclaimer: This ticket is part of a demo project and is not issued by the', {
+		x: 30,
+		y: height - 430,
+		size: 10,
+		font: font,
+		color: rgb(254, 209, 106)
+	});
+	page.drawText('official CSMVS booking system. It is NOT valid for entry and no real', {
+		x: 30,
+		y: height - 445,
+		size: 10,
+		font: font,
+		color: rgb(254, 209, 106)
+	});
+	page.drawText('payment has been processed.', {
+		x: 30,
+		y: height - 460,
+		size: 10,
+		font: font,
+		color: rgb(254, 209, 106)
 	});
 
 	page.drawText(`Verification QR:`, {
 		x: 30,
-		y: height - 500,
+		y: height - 560,
 		size: fontSize,
 		font: font,
 		color: rgb(0, 0, 0)
@@ -147,27 +155,6 @@ async function createPDF(person, numberOfTickets, date, ticketId) {
 	});
 
 	return await pdfDoc.save();
-}
-
-// Utility: split a long text into lines for PDF rendering
-function splitTextIntoLines(text, maxWidth, size, font) {
-	const words = text.split(' ');
-	const lines = [];
-	let current = '';
-
-	words.forEach((word) => {
-		const testLine = current ? `${current} ${word}` : word;
-		const width = font.widthOfTextAtSize(testLine, size);
-		if (width > maxWidth) {
-			lines.push(current);
-			current = word;
-		} else {
-			current = testLine;
-		}
-	});
-
-	if (current) lines.push(current);
-	return lines;
 }
 
 export async function POST({ request }) {
@@ -242,6 +229,7 @@ export async function POST({ request }) {
       border-radius: 3px;
     }
     .footer {
+	  margin-top: 20px;
       text-align: center;
       padding: 10px 20px;
       background-color: #f4f4f4;
