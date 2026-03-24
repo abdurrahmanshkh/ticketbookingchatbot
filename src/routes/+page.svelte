@@ -10,7 +10,6 @@
 	let forward = true;
 	let buttonText = 'Expand';
 	let expand = false;
-	let chatHeight = 'h-72';
 
 	// Reference to chat container for scrolling
 	let chatContainer;
@@ -69,7 +68,7 @@
 	function expandChatbot() {
 		expand = !expand;
 		buttonText = expand ? 'Collapse' : 'Expand';
-		chatHeight = expand ? 'h-[70vh]' : 'h-72';
+
 	}
 </script>
 
@@ -160,7 +159,9 @@
 
 	<!-- ── Chatbot ── -->
 	<div
-		class="flex flex-col overflow-hidden rounded-3xl border border-stone-700/40 bg-stone-900/60 shadow-2xl shadow-black/50 backdrop-blur-sm"
+		class="flex flex-col overflow-hidden rounded-3xl border border-stone-700/40 bg-stone-900/60 shadow-2xl shadow-black/50 backdrop-blur-sm {expand
+			? 'h-[80vh]'
+			: 'h-full'}"
 	>
 		<!-- Chatbot header bar -->
 		<div class="flex items-center justify-between border-b border-stone-700/40 px-5 py-4">
@@ -188,9 +189,9 @@
 			</button>
 		</div>
 
-		<!-- Messages area -->
+		<!-- Messages area — grows to fill all space between header and input bar -->
 		<div
-			class="chat-scroll overflow-y-auto p-4 transition-all duration-500 {chatHeight}"
+			class="chat-scroll min-h-80 flex-1 overflow-y-auto p-4"
 			bind:this={chatContainer}
 		>
 			{#if chatMessages.length === 0}
