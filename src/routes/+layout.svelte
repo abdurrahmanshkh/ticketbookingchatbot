@@ -1,40 +1,58 @@
 <script>
 	import '../app.css';
-	import { Card } from 'flowbite-svelte';
 </script>
 
+<!-- ── Sticky Header ── -->
 <header
-	class="min-w-full max-w-full bg-gradient-to-t from-yellow-950 to-stone-950 px-4 py-3 md:grid md:grid-cols-4 md:px-8"
+	class="sticky top-0 z-50 w-full border-b border-amber-900/30 bg-stone-950/80 backdrop-blur-md"
 >
-	<div
-		class="min-w-fit max-w-full self-center text-2xl font-bold text-yellow-700 md:text-left md:text-4xl"
-	>
-		<a href="/">CSMVS</a>
-	</div>
-	<div
-		class="col-span-2 min-w-fit max-w-full self-center font-semibold text-orange-200 md:text-center md:text-xl"
-	>
-		<a href="/">Chhatrapati Shivaji Maharaj Vastu Sangrahalaya</a>
-	</div>
-	<div
-		class="min-w-fit max-w-full self-center font-semibold text-orange-300 md:text-right md:text-xl"
-	>
-		<a href="/"> Ticket Booking Chatbot </a>
+	<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+		<!-- Logo / Brand -->
+		<a
+			href="/"
+			class="flex items-center gap-2 text-xl font-black tracking-tight text-amber-400 transition-opacity hover:opacity-80 sm:text-2xl"
+		>
+			<span class="text-2xl">🏛️</span>
+			CSMVS
+		</a>
+
+		<!-- Centre title — hidden on very small screens -->
+		<div class="hidden text-center text-sm font-medium text-stone-400 sm:block md:text-base">
+			Chhatrapati Shivaji Maharaj Vastu Sangrahalaya
+		</div>
+
+		<!-- Right badge -->
+		<a
+			href="/"
+			class="rounded-full border border-amber-700/40 bg-amber-950/60 px-3 py-1 text-xs font-semibold text-amber-300 transition-all duration-200 hover:border-amber-500/60 hover:bg-amber-900/60 sm:px-4 sm:text-sm"
+		>
+			Ticket Booking
+		</a>
 	</div>
 </header>
 
-<main class="bg-yellow-950">
-	<Card
-		class="md:min-h-[80vh] min-h-[74vh] max-w-full border-yellow-800 max-h-full
-    bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')] bg-cover bg-center bg-no-repeat py-10 md:px-16"
-		padding="none"
-	>
-		<slot />
-	</Card>
+<!-- ── Main Content ── -->
+<main
+	class="min-h-screen w-full bg-stone-950 bg-[url('https://lh3.googleusercontent.com/pw/AP1GczOEN7J3iSznMIa6px037PaMw5JZDYIvXSaPyHJZ45OiWu4pLIu42NU5eHw0oMwXkRVnQmJkM7G4KRMB1tXnAAu1Dxa7qLeFJwEZ0rrlyKCNbAMP--5MdX-YW0Q-atHJ8xmb8gd1wToIsfZhzTo-X8rP=w1341-h894-s-no-gm?authuser=0')] bg-cover bg-center bg-fixed"
+>
+	<!-- Dark overlay for readability -->
+	<div class="min-h-screen w-full bg-stone-950/80 px-4 py-8 sm:px-6 lg:px-8">
+		<div class="mx-auto max-w-7xl">
+			<slot />
+		</div>
+	</div>
 </main>
 
-<footer
-	class="max-w-full overflow-auto bg-gradient-to-b from-yellow-950 to-stone-950 p-4 text-center text-orange-300"
->
-	© Created as a sample chatbot website.
+<!-- ── Footer ── -->
+<footer class="border-t border-stone-800 bg-stone-950">
+	<div
+		class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-4 text-center sm:flex-row sm:text-left"
+	>
+		<span class="text-sm text-stone-500">
+			© <span class="font-semibold text-amber-700">CSMVS</span> — Ticket Booking Demo
+		</span>
+		<span class="text-xs text-stone-600">
+			Unofficial demo · Payments are simulated
+		</span>
+	</div>
 </footer>
